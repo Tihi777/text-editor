@@ -1,0 +1,14 @@
+.text-editor-row {
+  display: flex;
+  color: #71914c;
+
+  &__index {
+    width: 50px;
+    text-align: center;
+    color: #d4d4d4;
+  }
+
+  &__content {
+    white-space: nowrap;
+  }
+}

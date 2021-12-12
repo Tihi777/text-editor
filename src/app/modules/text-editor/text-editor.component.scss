@@ -1,0 +1,66 @@
+.text-editor {
+  font-weight: normal;
+  font-size: 18px;
+  font-feature-settings: "liga" 0, "calt" 0;
+  line-height: 20px;
+  letter-spacing: 0;
+
+  position: relative;
+  width: 100vw;
+  padding: 5px 0;
+  box-sizing: border-box;
+  height: calc(100vh - 70px);
+  background: #404040;
+  overflow: auto;
+
+  &__caret {
+    position: absolute;
+    width: 9px;
+    height: 3px;
+    background: #d4d4d4;
+    animation: 1s blink step-end infinite;
+  }
+}
+
+.header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  font-size: 24px;
+  color: #d4d4d4;
+  background: #262626;
+}
+
+.header-buttons {
+  display: flex;
+
+  button {
+    border: none;
+    color: #262626;
+    font-size: 16px;
+    background: #d4d4d4;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 40px;
+
+    &:hover {
+      background: #71914c;
+      color: #d4d4d4;
+    }
+
+    &:first-child {
+      margin-right: 15px;
+    }
+  }
+}
+
+@keyframes blink {
+  from, to {
+    background: transparent;
+  }
+  50% {
+    background: #d4d4d4;
+  }
+}

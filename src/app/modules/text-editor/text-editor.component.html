@@ -1,0 +1,22 @@
+<div class="header">
+  <div class="header-title">Текстовый редактор</div>
+  <div class="header-buttons">
+    <button (click)="saveToFile()">Экспорт</button>
+    <button (click)="fileInput.click()">Импорт</button>
+    <input
+      type="file"
+      accept="text/plain"
+      hidden
+      #fileInput
+      (change)="openFileInEditor(fileInput?.files?.item(0))"
+    />
+  </div>
+</div>
+<div class="text-editor">
+  <app-text-editor-row
+    *ngFor="let row of textEditorRows"
+    [data]="row"
+  ></app-text-editor-row>
+
+  <span class="text-editor__caret" #caret></span>
+</div>
