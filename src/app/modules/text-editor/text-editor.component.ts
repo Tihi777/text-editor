@@ -25,7 +25,7 @@ export class TextEditorComponent implements AfterViewInit {
   @ViewChild('caret') caret: ElementRef<HTMLSpanElement>;
 
   textEditorRows: TextEditorRow[];
-  caretPosition$: BehaviorSubject<CaretPosition>;
+  private caretPosition$: BehaviorSubject<CaretPosition>;
 
   constructor(
     private renderer: Renderer2,
@@ -66,7 +66,7 @@ export class TextEditorComponent implements AfterViewInit {
     }
 
     if (keyCode === KeyCode.Space) {
-      const newContent = this.insertContent(
+      const newContent = this.insertSubstring(
         this.textEditorRows[rowIndex - 1].content,
         columnIndex,
         ' '
@@ -83,7 +83,7 @@ export class TextEditorComponent implements AfterViewInit {
       return;
     }
 
-    const newContent = this.insertContent(
+    const newContent = this.insertSubstring(
       this.textEditorRows[rowIndex - 1].content,
       columnIndex,
       key
@@ -101,11 +101,8 @@ export class TextEditorComponent implements AfterViewInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    const keyCode = event.keyCode;
-    const key = event.key;
-
+  @HostListener('document:keydown', ['$event.keyCode'])
+  handleKeyboardEvent(keyCode: KeyCode) {
     const rowIndex = this.caretPosition$.getValue().rowIndex;
     const columnIndex = this.caretPosition$.getValue().columnIndex;
 
@@ -243,7 +240,7 @@ export class TextEditorComponent implements AfterViewInit {
     this.renderer.setStyle(this.caret.nativeElement, 'top', y + 'px');
   }
 
-  private insertContent(str: string, index: number, value: string) {
+  private insertSubstring(str: string, index: number, value: string) {
     return str.substr(0, index) + value + str.substr(index);
   }
 
