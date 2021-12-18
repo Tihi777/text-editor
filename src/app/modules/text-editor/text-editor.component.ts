@@ -103,8 +103,7 @@ export class TextEditorComponent implements AfterViewInit {
 
   @HostListener('document:keydown', ['$event.keyCode'])
   handleKeyboardEvent(keyCode: KeyCode) {
-    const rowIndex = this.caretPosition$.getValue().rowIndex;
-    const columnIndex = this.caretPosition$.getValue().columnIndex;
+    const { rowIndex, columnIndex } = this.caretPosition$.getValue();
 
     if (keyCode === KeyCode.ArrowLeft) {
       this.caretPosition$.next({
@@ -125,7 +124,10 @@ export class TextEditorComponent implements AfterViewInit {
     if (keyCode === KeyCode.ArrowUp) {
       this.caretPosition$.next({
         rowIndex: rowIndex - 1,
-        columnIndex: this.textEditorRows[rowIndex - 2].content.length,
+        columnIndex: Math.min(
+          this.textEditorRows[rowIndex - 2].content.length,
+          columnIndex
+        ),
       } as CaretPosition);
       return;
     }
@@ -133,7 +135,10 @@ export class TextEditorComponent implements AfterViewInit {
     if (keyCode === KeyCode.ArrowDown) {
       this.caretPosition$.next({
         rowIndex: rowIndex + 1,
-        columnIndex: this.textEditorRows[rowIndex].content.length,
+        columnIndex: Math.min(
+          this.textEditorRows[rowIndex].content.length,
+          columnIndex
+        ),
       } as CaretPosition);
       return;
     }
